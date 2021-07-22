@@ -1,29 +1,80 @@
-const mongoose = require('mongoose');
-const productModel = require('../model/productModel');
+import mongoose from 'mongoose';
+import productModel from '../model/productModel';
 
-export const findProductByName = async(productName) => {
-    return await productModel.findOne({ productName: productName });
-}
 
-export const addProduct = async(data) => {
-    return await productModel.create(data);
-}
+module.exports = {
+    findProductByName: async(productName) => {
+        try {
+            return await productModel.findOne({ productName: productName });
+        } catch (error) {
+            return handleError({
+                res,
+                error,
+                data: error
+            });
+        }
+    },
 
-export const getSingleProduct = async(productId) => {
-    return await productModel.findOne({ _id: mongoose.Types.ObjectId(productId) })
-}
+    addProduct: async(data) => {
+        try {
+            return await productModel.create(data);
+        } catch (error) {
+            return handleError({
+                res,
+                error,
+                data: error
+            });
+        }
+    },
 
-export const getAllProducts = async() => {
-    return await productModel.find();
-}
+    getSingleProduct: async(productId) => {
+        try {
+            return await productModel.findOne({ _id: mongoose.Types.ObjectId(productId) })
+        } catch (error) {
+            return handleError({
+                res,
+                error,
+                data: error
+            });
+        }
+    },
 
-export const updateProduct = async(productId, data) => {
-    return await ProductModel.findOneAndUpdate({ _id: mongoose.Types.ObjectId(productId) }, data, {
-        new: true,
-        upsert: true,
-    });
-};
+    getAllProducts: async() => {
+        try {
+            return await productModel.find();
+        } catch (error) {
+            return handleError({
+                res,
+                error,
+                data: error
+            });
+        }
+    },
 
-export const deleteProduct = async(productId) => {
-    return await ProductModel.findOneAndDelete({ _id: mongoose.Types.ObjectId(productId) })
+    updateProduct: async(productId, data) => {
+        try {
+            return await ProductModel.findOneAndUpdate({ _id: mongoose.Types.ObjectId(productId) }, data, {
+                new: true,
+                upsert: true,
+            });
+        } catch (error) {
+            return handleError({
+                res,
+                error,
+                data: error
+            });
+        }
+    },
+
+    deleteProduct: async(productId) => {
+        try {
+            return await ProductModel.findOneAndDelete({ _id: mongoose.Types.ObjectId(productId) })
+        } catch (error) {
+            return handleError({
+                res,
+                error,
+                data: error
+            });
+        }
+    }
 }

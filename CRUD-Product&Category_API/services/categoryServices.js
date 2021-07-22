@@ -1,30 +1,79 @@
-const mongoose = require('mongoose');
-const categoryModel = require('../model/categoryModel');
+import mongoose from 'mongoose';
+import categoryModel from '../model/categoryModel'
 
-export const findCategoryByName = async(value) => {
-    return await categoryModel.findOne(value);
-};
-export const addCategory = async(data) => {
-    return await categoryModel.create(data);
-};
+module.exports = {
+    findCategoryByName: async(value) => {
+        try {
+            return await categoryModel.findOne(value);
+        } catch (error) {
+            return handleError({
+                res,
+                error,
+                data: error
+            });
+        }
+    },
 
-export const getAllcategory = async() => {
-    return await categoryModel.find();
-};
+    addCategory: async(data) => {
+        try {
+            return await categoryModel.create(data);
+        } catch (error) {
+            return handleError({
+                res,
+                error,
+                data: error
+            });
+        }
+    },
 
-export const getSingleCategory = async(categoryId) => {
-    return await categoryModel.findOne({ _id: mongoose.type.ObjectId(categoryId) });
-};
-export const updateCategory = async(categoryId, data) => {
-    return await categoryModel.findOneAndUpdate({ _id: mongoose.Types.ObjectId(categoryId) }, { $set: data }, {
-        new: true,
-        upsert: false
-    })
+    getAllcategory: async() => {
+        try {
+            return await categoryModel.find();
+        } catch (error) {
+            return handleError({
+                res,
+                error,
+                data: error
+            });
+        }
+    },
+
+    getSingleCategory: async(categoryId) => {
+        try {
+            return await categoryModel.findOne({ _id: mongoose.type.ObjectId(categoryId) });
+        } catch (error) {
+            return handleError({
+                res,
+                error,
+                data: error
+            });
+        }
+    },
+
+    updateCategory: async(categoryId, data) => {
+        try {
+            return await categoryModel.findOneAndUpdate({ _id: mongoose.Types.ObjectId(categoryId) }, { $set: data }, {
+                new: true,
+                upsert: false
+            })
+        } catch (error) {
+            return handleError({
+                res,
+                error,
+                data: error
+            });
+        }
+    },
+
+    deleteCategory: async categoryId => {
+        try {
+            return await categoryModel.findOneAndDelete({ _id: mongoos.Types.ObjectId(categoryId) });
+        } catch (error) {
+            return handleError({
+                res,
+                error,
+                data: error
+            });
+        }
+    }
 }
-export const deleteCategory = async categoryId => {
-    return await categoryModel.findOneAndDelete({ _id: mongoos.Types.ObjectId(categoryId) });
-}
-
-// module.exports = {
-
-// }
