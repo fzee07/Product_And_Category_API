@@ -1,5 +1,8 @@
 import mongoose from 'mongoose';
 import categoryModel from '../model/categoryModel'
+import {
+    handleError
+} from "../config/requestHandler";
 
 module.exports = {
     findCategoryByName: async(value) => {
