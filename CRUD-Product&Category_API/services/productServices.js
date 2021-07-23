@@ -1,5 +1,8 @@
 import mongoose from 'mongoose';
 import productModel from '../model/productModel';
+import {
+    handleError
+} from "../config/requestHandler";
 
 
 module.exports = {
